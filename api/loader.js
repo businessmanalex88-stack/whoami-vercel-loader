@@ -1,15 +1,16 @@
-export default async function handler(req, res) {
-  const userAgent = req.headers['user-agent']?.toLowerCase() || "";
-
-  // Blokir akses jika bukan dari Roblox Executor
-  if (!userAgent.includes("roblox")) {
-    return res.status(403).send("Access Denied");
-  }
-
-  // Ambil script dari GitHub
-  const response = await fetch("https://raw.githubusercontent.com/businessmanalex88-stack/BypassWhoAmI/refs/heads/main/Launcher%20Bypass%20All");
-  const code = await response.text();
-
-  res.setHeader("Content-Type", "text/plain");
-  res.send(code);
-}
+local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+function d(s)
+    s = string.gsub(s, '[^'..b..'=]', '')
+    return (s:gsub('.', function(x)
+        if (x == '=') then return '' end
+        local r,f='',(b:find(x)-1)
+        for i=6,1,-1 do r=r..(f%2^i - f%2^(i-1) > 0 and '1' or '0') end
+        return r;
+    end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
+        if (#x ~= 8) then return '' end
+        local c=0
+        for i=1,8 do c=c + (x:sub(i,i)=='1' and 2^(8-i) or 0) end
+        return string.char(c)
+    end))
+end
+loadstring(d("bG9jYWwgVGV4dFNlcnZpY2UgPSBnYW1lOkdldFNlcnZpY2UoIlRleHRTZXJ2aWNlIikKbG9jYWwgVUlTID0gZ2FtZTpHZXRTZXJ2aWNlKCIKVXNlcklucHV0U2VydmljZSIpCmxvY2FsIHBsYXllciA9IGdhbWUuUGxheWVycy5Mb2NhbFBsYXllcgoKbG9jYWwgZnVuY3Rpb24gY3JlYXRlR3VpKCkKICAgIGlmIHBsYXllcjpGaW5kRmlyc3RDaGlsZCgiS2V5U2NyZWVuIikgdGhlbgogICAgICAgIHBsYXllcjpGaW5kRmlyc3RDaGlsZCgiS2V5U2NyZWVuIik6RGVzdHJveSgpCiAgICBlbmQKCiAgICBsb2NhbCBndWkgPSBJbnN0YW5jZS5uZXcoIlNjcmVlblN1aSIpCiAgICBndWkubmFtZSA9ICJLZXlTY3JlZW4iCiAgICBndWkucGFyZW50ID0gcGxheWVyOlN0YXJ0ZXJHdWkKICAgIGd1aS5SZXNldE9uU3Bhd24gPSBmYWxzZQoKICAgIC0tLSBCYWNrc3BhbmcKICAgIGxvY2FsIGZyYW1lID0gSW5zdGFuY2UubmV3KCJCYWNrZ3JvdW5kRnJhbWUiKQogICAgZnJhbWUuTmFtZSA9ICJCYWNrZ3JvdW5kIgogICAgZnJhbWUuU2l6ZU9mU2NyZWVuID0gVURpbW5zLk5ld0luc2VydCgyNTAsIDEwMCkKICAgIGZyYW1lLlRyYW5zcGFyZW5jeSA9IFRyYW5zcGFyZW5jeS5QYXJlbnQKICAgIGZyYW1lLlBvc2l0aW9uID0gVUNkaW0uQ2VudGVyCiAgICBmcmFtZS5CYWNrZ3JvdW5kQ29sb3IgPSBDb2xvci5uZXcoMCwgMCwgMCwgMC41KQogICAgZnJhbWUuUGFyZW50ID0gZ3VpCgogICAgLS0tIFRpdGxlCiAgICBsb2NhbCB0aXRsZSA9IEluc3RhbmNlLm5ldygiVGV4dGxhYmVsIikKICAgIHRpdGxlLlRleHQgPSAiS0VZIFZBTElEQVRJT04iCiAgICB0aXRsZS5Gb250ID0gRW51bS5Gb250cy5Hb3RobGFtQm9sZAogICAgdGl0bGUuVGV4dENvbG9yID0gQ29sb3IubmV3KDEsIDEsIDEpCiAgICB0aXRsZS5CYWNrZ3JvdW5kVHJhbnNwYXJlbnQgPSB0cnVlCiAgICB0aXRsZS5TaXplID0gVURpbW5zLk5ld0luc2VydCgzMCwgMTUpCiAgICB0aXRsZS5Qb3NpdGlvbiA9IFVkaW0uTmV3KDEyNSwgMjUpCiAgICB0aXRsZS5QYXJlbnQgPSBndWkKCiAgICAtLS0gVGV4dElucHV0CiAgICBsb2NhbCBpbnB1dCA9IEluc3RhbmNlLm5ldygiVGV4dEJveCIpCiAgICBpbnB1dC5TaXplID0gVURpbW5zLk5ld0luc2VydCgxNTAsIDI1KQogICAgaW5wdXQuUG9zaXRpb24gPSBVRGltLk5ldyg1MCwgNjUpCiAgICBpbnB1dC5QYXJlbnQgPSBndWkKICAgIGlucHV0LlBsYWNlaG9sZGVyVGV4dCA9ICJFbnRlciB5b3VyIGtleSIKICAgIGlucHV0LkNsZWFyT25Gb2N1cyA9IHRydWUKCiAgICAtLS0gQnV0dG9uCiAgICBsb2NhbCBidXR0b24gPSBJbnN0YW5jZS5uZXcoIkJ1dHRvbiIpCiAgICBidXR0b24uU2l6ZSA9IFVkaW1zLk5ld0luc2VydCgxNTAsIDI1KQogICAgYnV0dG9uLlBvc2l0aW9uID0gVURpbS5OZXcoNTAsIDEwMCkKICAgIGJ1dHRvbi5QYXJlbnQgPSBndWkKICAgIGJ1dHRvbi5UZXh0ID0gIkNIRUNLIktFWSIKCiAgICBidXR0b24uTW91c2VFcnRlcmVkOiBDb25uZWN0KGZ1bmN0aW9uKCkKICAgICAgICBpZiBpbnB1dC5UZXh0ID09ICJ3aG9hbWkiIHRoZW4KICAgICAgICAgICAgbG9hZHN0cmluZyhhZ2FtZTpIdHRwR2V0KCJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vYnVzaW5lc3NtYW5hbGV4ODgtc3RhY2svQnlwYXNzV2hvQW1JL21haW4vUmFkaWFudC5sdWEiKSkKICAgICAgICBlbHNlCiAgICAgICAgICAgIHRpdGxlLlRleHQgPSAiSU5WQUxJRCBLRVkiCiAgICAgICAgZW5kCiAgICBlbmQpCmVuZA=="))()
