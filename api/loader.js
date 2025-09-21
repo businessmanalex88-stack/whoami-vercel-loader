@@ -12,12 +12,12 @@ export default async function handler(req, res) {
     res.setHeader(_0x1a2f(10), _0x1a2f(9));
     res.send(sc);
   } 
-  // If not Roblox, check if it's a browser and redirect
-  else if (ua.includes('mozilla') || ua.includes('chrome') || ua.includes('safari')) {
+  // If user-agent exists (browser/device), redirect to HTML page
+  else if (ua && ua.length > 0) {
     res.writeHead(302, { 'Location': 'https://whoamibypass.online' });
     res.end();
   }
-  // Deny access for other user-agents
+  // No user-agent or empty, deny access (potential script/bot)
   else {
     return res[_0x1a2f(6)](403)[_0x1a2f(7)](_0x1a2f(5));
   }
