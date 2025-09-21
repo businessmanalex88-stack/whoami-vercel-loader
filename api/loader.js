@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   } 
   // If user-agent exists (browser/device), redirect to HTML page
   else if (ua && ua.length > 0) {
-    res.writeHead(302, { 'Location': 'https://whoamibypass.online' });
+    res.writeHead(302, { 'Location': 'https://tiktok.com/@warpahvippubg' });
     res.end();
   }
   // No user-agent or empty, deny access (potential script/bot)
